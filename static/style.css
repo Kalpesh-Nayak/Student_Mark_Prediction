@@ -1,0 +1,1033 @@
+
+/* =========================================
+   STUDENT MARKS PREDICTOR
+   Premium Responsive UI
+   ========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg-primary: #080d1a;
+    --bg-secondary: #101a30;
+    --card-bg: rgba(17, 27, 48, 0.96);
+    --input-bg: #0b1222;
+
+    --text-primary: #f1f5ff;
+    --text-secondary: #98a6c3;
+    --text-muted: #6e7e9f;
+
+    --accent: #6385ff;
+    --accent-light: #a5b4fc;
+    --accent-purple: #8b5cf6;
+    --success: #34d399;
+    --danger: #fb7185;
+
+    --border: rgba(148, 163, 184, 0.17);
+    --radius-lg: 24px;
+    --radius-md: 16px;
+    --radius-sm: 11px;
+
+    --shadow-card: 0 24px 70px rgba(0, 0, 0, 0.3);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text-primary);
+    line-height: 1.6;
+
+    background:
+        radial-gradient(
+            ellipse at 10% 5%,
+            rgba(76, 110, 245, 0.16),
+            transparent 38%
+        ),
+        radial-gradient(
+            ellipse at 90% 85%,
+            rgba(139, 92, 246, 0.14),
+            transparent 38%
+        ),
+        var(--bg-primary);
+}
+
+/* Background grid */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+
+    background-image:
+        linear-gradient(
+            rgba(148, 163, 184, 0.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(148, 163, 184, 0.025) 1px,
+            transparent 1px
+        );
+
+    background-size: 44px 44px;
+
+    mask-image: linear-gradient(
+        to bottom,
+        black,
+        transparent 90%
+    );
+}
+
+/* =========================================
+   MAIN CONTAINER
+   ========================================= */
+
+.container {
+    width: min(1120px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 36px 0 24px;
+
+    animation: fadeUp 0.7s ease both;
+}
+
+/* =========================================
+   HEADER
+   ========================================= */
+
+header {
+    padding: 30px 0 42px;
+    text-align: center;
+
+    animation: fadeUp 0.7s ease both;
+}
+
+header::before {
+    content: "AI POWERED • REGRESSION ANALYTICS";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 8px 15px;
+    margin-bottom: 22px;
+
+    color: #a9bbff;
+    background: rgba(99, 133, 255, 0.08);
+
+    border: 1px solid rgba(99, 133, 255, 0.3);
+    border-radius: 999px;
+
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+header h1 {
+    margin-bottom: 16px;
+
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -1.8px;
+
+    background: linear-gradient(
+        110deg,
+        #ffffff 10%,
+        #b7c7ff 48%,
+        #a78bfa 90%
+    );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+header p {
+    max-width: 650px;
+    margin: 0 auto;
+
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+
+/* =========================================
+   PREDICTION CARD
+   ========================================= */
+
+.prediction-card {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: clamp(24px, 5vw, 48px);
+
+    background: linear-gradient(
+        145deg,
+        rgba(21, 32, 56, 0.97),
+        rgba(12, 20, 37, 0.97)
+    );
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-card);
+
+    animation: fadeUp 0.8s ease 0.1s both;
+}
+
+.prediction-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 8%;
+    right: 8%;
+    height: 1px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(129, 155, 255, 0.8),
+        transparent
+    );
+}
+
+.prediction-card > h2 {
+    margin-bottom: 8px;
+
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.4rem, 3vw, 1.8rem);
+    font-weight: 600;
+    letter-spacing: -0.5px;
+}
+
+.form-description {
+    margin-bottom: 32px;
+    color: var(--text-secondary);
+    font-size: 0.94rem;
+}
+
+/* =========================================
+   FORM GRID — MAIN ALIGNMENT FIX
+   ========================================= */
+
+#prediction-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 26px;
+    row-gap: 24px;
+
+    width: 100%;
+    align-items: start;
+}
+
+/*
+   IMPORTANT:
+   All four section headings are direct children
+   of the form. Force EVERY heading to span both
+   columns so none appears beside an input.
+*/
+
+#prediction-form > h3 {
+    grid-column: 1 / -1;
+
+    width: 100%;
+    margin: 12px 0 0;
+    padding: 0 0 12px;
+
+    color: #c7d2fe;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.5;
+
+    border-bottom: 1px solid var(--border);
+
+    position: relative;
+}
+
+#prediction-form > h3:first-child {
+    margin-top: 0;
+}
+
+#prediction-form > h3::after {
+    content: "";
+    display: block;
+
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+
+    width: 55px;
+    height: 2px;
+
+    background: linear-gradient(
+        90deg,
+        var(--accent),
+        var(--accent-purple)
+    );
+
+    border-radius: 2px;
+}
+
+/* =========================================
+   FORM FIELDS
+   ========================================= */
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+}
+
+.form-group label {
+    display: block;
+    width: 100%;
+    min-height: 27px;
+    margin-bottom: 9px;
+
+    color: #dbe5ff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
+
+    transition: color 0.25s ease;
+}
+
+.form-group:focus-within label {
+    color: var(--accent-light);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    display: block;
+
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    min-height: 54px;
+    margin: 0;
+
+    padding: 14px 15px;
+
+    color: var(--text-primary);
+    background: var(--input-bg);
+
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: var(--radius-sm);
+
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.5;
+
+    outline: none;
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.form-group input::placeholder {
+    color: #64748b;
+}
+
+/* Input hover */
+
+.form-group input:hover,
+.form-group select:hover,
+.form-group textarea:hover {
+    border-color: rgba(129, 155, 255, 0.65);
+    background-color: #0e172b;
+}
+
+/* Input focus */
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--accent);
+
+    background-color: #0d162a;
+
+    box-shadow:
+        0 0 0 4px rgba(99, 133, 255, 0.13),
+        0 0 22px rgba(99, 133, 255, 0.06);
+
+    transform: translateY(-1px);
+}
+
+/* Dropdown options */
+
+.form-group select option {
+    color: var(--text-primary);
+    background: #101a30;
+}
+
+/* Small helper text */
+
+.form-group small {
+    display: block;
+    margin-top: 8px;
+
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    line-height: 1.5;
+}
+
+/* =========================================
+   PREDICTION BUTTON
+   ========================================= */
+
+#prediction-form button[type="submit"] {
+    grid-column: 1 / -1;
+
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    width: 100%;
+    min-height: 58px;
+    margin-top: 8px;
+    padding: 16px 22px;
+
+    color: #ffffff;
+
+    background: linear-gradient(
+        110deg,
+        #4f70f5,
+        #7657ed
+    );
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+
+    cursor: pointer;
+    overflow: hidden;
+
+    box-shadow: 0 10px 28px rgba(79, 112, 245, 0.22);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        filter 0.25s ease;
+}
+
+/* Moving light effect */
+
+#prediction-form button[type="submit"]::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+
+    width: 70%;
+    height: 100%;
+
+    background: linear-gradient(
+        110deg,
+        transparent,
+        rgba(255, 255, 255, 0.22),
+        transparent
+    );
+
+    transform: skewX(-20deg);
+    transition: left 0.65s ease;
+    pointer-events: none;
+}
+
+#prediction-form button[type="submit"]::after {
+    content: "→";
+    font-size: 1.3rem;
+
+    transition: transform 0.25s ease;
+}
+
+#prediction-form button[type="submit"]:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.08);
+
+    box-shadow: 0 15px 35px rgba(79, 112, 245, 0.32);
+}
+
+#prediction-form button[type="submit"]:hover::before {
+    left: 150%;
+}
+
+#prediction-form button[type="submit"]:hover::after {
+    transform: translateX(4px);
+}
+
+#prediction-form button[type="submit"]:active {
+    transform: translateY(0) scale(0.99);
+}
+
+#prediction-form button[type="submit"]:focus-visible {
+    outline: 3px solid var(--accent-light);
+    outline-offset: 4px;
+}
+
+#prediction-form button[type="submit"]:disabled {
+    opacity: 0.75;
+    cursor: wait;
+    transform: none;
+    filter: none;
+    box-shadow: none;
+}
+
+/* =========================================
+   PREDICTION RESULTS
+   ========================================= */
+
+#result {
+    margin-top: 28px;
+}
+
+#result:empty {
+    display: none;
+}
+
+.result-card {
+    padding: clamp(20px, 4vw, 30px);
+
+    background: linear-gradient(
+        145deg,
+        rgba(52, 211, 153, 0.07),
+        rgba(17, 27, 48, 0.5)
+    );
+
+    border: 1px solid rgba(52, 211, 153, 0.25);
+    border-radius: var(--radius-md);
+
+    animation: resultReveal 0.6s ease both;
+
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        transform 0.3s ease;
+}
+
+.result-card:hover {
+    border-color: rgba(52, 211, 153, 0.5);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.17);
+    transform: translateY(-2px);
+}
+
+.result-card > h2 {
+    margin-bottom: 22px;
+
+    color: var(--text-primary);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.4rem, 3vw, 1.8rem);
+}
+
+.result-item {
+    margin-bottom: 24px;
+}
+
+.result-item h3 {
+    margin-bottom: 8px;
+
+    color: var(--success);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.15rem;
+}
+
+.result-value {
+    margin: 8px 0;
+
+    color: #ffffff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2.1rem, 5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.3;
+
+    transition: text-shadow 0.25s ease;
+}
+
+.result-card:hover .result-value {
+    text-shadow: 0 0 22px rgba(52, 211, 153, 0.14);
+}
+
+.result-value span {
+    color: var(--text-secondary);
+    font-size: 0.65em;
+    font-weight: 500;
+}
+
+.result-note,
+.result-description {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+/* Error message */
+
+.error-message {
+    padding: 16px 18px;
+
+    color: #fecdd3;
+    background: rgba(251, 113, 133, 0.08);
+
+    border: 1px solid rgba(251, 113, 133, 0.25);
+    border-radius: var(--radius-sm);
+
+    font-size: 0.9rem;
+
+    animation: fadeUp 0.35s ease both;
+}
+
+/* =========================================
+   FOOTER
+   ========================================= */
+
+footer {
+    padding: 32px 10px 10px;
+
+    color: var(--text-muted);
+    text-align: center;
+    font-size: 0.82rem;
+
+    transition: color 0.25s ease;
+}
+
+footer:hover {
+    color: var(--accent-light);
+}
+
+footer p {
+    line-height: 1.8;
+}
+
+/* =========================================
+   ANIMATIONS
+   ========================================= */
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes resultReveal {
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.985);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Stagger the first six form fields */
+
+#prediction-form > .form-group:nth-of-type(-n+6) {
+    animation: fadeUp 0.5s ease both;
+}
+
+#prediction-form > .form-group:nth-of-type(1) {
+    animation-delay: 0.04s;
+}
+
+#prediction-form > .form-group:nth-of-type(2) {
+    animation-delay: 0.08s;
+}
+
+#prediction-form > .form-group:nth-of-type(3) {
+    animation-delay: 0.12s;
+}
+
+#prediction-form > .form-group:nth-of-type(4) {
+    animation-delay: 0.16s;
+}
+
+#prediction-form > .form-group:nth-of-type(5) {
+    animation-delay: 0.20s;
+}
+
+#prediction-form > .form-group:nth-of-type(6) {
+    animation-delay: 0.24s;
+}
+
+/* =========================================
+   RESPONSIVE DESIGN
+   ========================================= */
+
+@media (max-width: 650px) {
+    .container {
+        width: calc(100% - 28px);
+        padding-top: 18px;
+    }
+
+    header {
+        padding: 22px 0 28px;
+    }
+
+    header h1 {
+        letter-spacing: -1px;
+    }
+
+    header p {
+        font-size: 0.94rem;
+    }
+
+    .prediction-card {
+        padding: 24px 18px;
+        border-radius: 18px;
+    }
+
+    #prediction-form {
+        grid-template-columns: minmax(0, 1fr);
+        column-gap: 0;
+        row-gap: 20px;
+    }
+
+    #prediction-form > h3 {
+        grid-column: 1;
+        margin-top: 12px;
+    }
+
+    #prediction-form button[type="submit"] {
+        grid-column: 1;
+    }
+
+    .form-group label {
+        min-height: 0;
+    }
+}
+
+/* Tablet spacing */
+
+@media (min-width: 651px) and (max-width: 900px) {
+    .container {
+        width: calc(100% - 36px);
+    }
+
+    .prediction-card {
+        padding: 32px;
+    }
+
+    #prediction-form {
+        column-gap: 20px;
+        row-gap: 22px;
+    }
+}
+
+/* Accessibility: respect reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* =========================================
+   STUDENT IMPROVEMENT RECOMMENDATIONS
+========================================= */
+
+.recommendations-section {
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: 1px solid rgba(148, 163, 184, 0.2);
+    animation: recommendationsFadeIn 0.7s ease both;
+}
+
+/* Main heading */
+.recommendations-header {
+    margin-bottom: 26px;
+}
+
+.recommendations-header h2 {
+    font-size: clamp(1.7rem, 3vw, 2.2rem);
+    font-weight: 800;
+    line-height: 1.3;
+    margin: 0 0 12px;
+    color: #c4b5fd;
+    background: linear-gradient(90deg, #c4b5fd, #67e8f9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.6px;
+}
+
+.recommendations-header p {
+    font-size: 0.98rem;
+    line-height: 1.7;
+    color: #a5b4cc;
+    margin: 0;
+}
+
+/* Recommendations grid */
+.recommendations-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+/* Individual recommendation card */
+.recommendation-card {
+    position: relative;
+    min-width: 0;
+    padding: 22px;
+    overflow: hidden;
+
+    background: linear-gradient(
+        145deg,
+        rgba(30, 41, 70, 0.95),
+        rgba(15, 23, 42, 0.98)
+    );
+
+    border: 1px solid rgba(129, 140, 248, 0.22);
+    border-radius: 18px;
+
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+/* Decorative accent at the top of each card */
+.recommendation-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #8b5cf6, #22d3ee);
+}
+
+/* Card hover animation */
+.recommendation-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(167, 139, 250, 0.65);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* Area title and status badge */
+.recommendation-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.recommendation-top h3 {
+    margin: 0;
+    color: #f1f5f9;
+    font-size: 1.12rem;
+    font-weight: 750;
+    line-height: 1.5;
+}
+
+/* Status badge */
+.recommendation-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    max-width: 100%;
+    padding: 6px 11px;
+
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.3);
+
+    background: rgba(148, 163, 184, 0.12);
+    color: #cbd5e1;
+
+    font-size: 0.76rem;
+    font-weight: 750;
+    line-height: 1.4;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+/* Recommendation message */
+.recommendation-card > p {
+    margin: 0;
+    color: #cbd5e1;
+    font-size: 0.93rem;
+    line-height: 1.8;
+}
+
+/* Note below all cards */
+.recommendations-note {
+    margin: 22px 0 0;
+    padding: 14px 16px;
+
+    border-left: 3px solid #818cf8;
+    border-radius: 0 10px 10px 0;
+
+    background: rgba(99, 102, 241, 0.08);
+    color: #94a3b8;
+
+    font-size: 0.85rem;
+    line-height: 1.7;
+}
+
+/* Entrance animation */
+@keyframes recommendationsFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+    .recommendations-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    .recommendation-card {
+        padding: 18px;
+    }
+
+    .recommendation-top h3 {
+        font-size: 1rem;
+    }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .recommendations-section {
+        margin-top: 28px;
+        padding-top: 22px;
+    }
+
+    .recommendations-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+    }
+
+    .recommendations-header h2 {
+        font-size: 1.65rem;
+    }
+
+    .recommendations-header p {
+        font-size: 0.9rem;
+    }
+
+    .recommendation-card {
+        padding: 20px;
+        border-radius: 15px;
+    }
+
+    .recommendation-top {
+        align-items: center;
+    }
+}
+
+/* Accessibility: respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .recommendations-section {
+        animation: none;
+    }
+
+    .recommendation-card {
+        transition: none;
+    }
+
+    .recommendation-card:hover {
+        transform: none;
+    }
+}
+
+
+/* Status-specific badge colors */
+
+.status-needs-improvement {
+    color: #fca5a5;
+    background: rgba(239, 68, 68, 0.13);
+    border-color: rgba(248, 113, 113, 0.4);
+}
+
+.status-needs-attention {
+    color: #fca5a5;
+    background: rgba(239, 68, 68, 0.13);
+    border-color: rgba(248, 113, 113, 0.4);
+}
+
+.status-review-recommended {
+    color: #fcd34d;
+    background: rgba(245, 158, 11, 0.13);
+    border-color: rgba(251, 191, 36, 0.4);
+}
+
+.status-monitor {
+    color: #fcd34d;
+    background: rgba(245, 158, 11, 0.13);
+    border-color: rgba(251, 191, 36, 0.4);
+}
+
+.status-good,
+.status-improving,
+.status-stable {
+    color: #6ee7b7;
+    background: rgba(16, 185, 129, 0.13);
+    border-color: rgba(52, 211, 153, 0.4);
+}
+
+.status-excellent {
+    color: #7dd3fc;
+    background: rgba(14, 165, 233, 0.13);
+    border-color: rgba(56, 189, 248, 0.4);
+}
+
+.status-good-opportunity,
+.status-opportunity-to-improve {
+    color: #fcd34d;
+    background: rgba(245, 158, 11, 0.13);
+    border-color: rgba(251, 191, 36, 0.4);
+}

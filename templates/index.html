@@ -1,0 +1,515 @@
+#& "$env:LOCALAPPDATA\Programs\Python\Python314\python.exe" app.py
+#http://127.0.0.1:5000/predict
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Marks Predictor</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- HEADER -->
+        <header>
+            <h1>Student Marks Predictor</h1>
+            <p>Predict student performance using Machine Learning</p>
+        </header>
+
+        <main class="prediction-card">
+
+            <h2>Student Information</h2>
+
+            <p class="form-description">
+                Enter the student's academic, family, and lifestyle
+                information to estimate their final grade.
+            </p>
+
+            <!-- STUDENT INPUT FORM -->
+            <form id="prediction-form"
+                  action="{{ url_for('predict') }}"
+                  method="POST">
+
+                <!-- PERSONAL INFORMATION -->
+                <h3>Personal Information</h3>
+
+                <div class="form-group">
+                    <label for="school">School</label>
+                    <select id="school" name="school" required>
+                        <option value="">Select school</option>
+                        <option value="GP">GP</option>
+                        <option value="MS">MS</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="sex">Sex</label>
+                    <select id="sex" name="sex" required>
+                        <option value="">Select</option>
+                        <option value="F">Female</option>
+                        <option value="M">Male</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number"
+                           id="age"
+                           name="age"
+                           min="15"
+                           max="22"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Home Address Type</label>
+                    <select id="address" name="address" required>
+                        <option value="">Select</option>
+                        <option value="U">Urban</option>
+                        <option value="R">Rural</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="famsize">Family Size</label>
+                    <select id="famsize" name="famsize" required>
+                        <option value="">Select</option>
+                        <option value="LE3">3 or fewer members</option>
+                        <option value="GT3">More than 3 members</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="Pstatus">Parents' Cohabitation Status</label>
+                    <select id="Pstatus" name="Pstatus" required>
+                        <option value="">Select</option>
+                        <option value="T">Living together</option>
+                        <option value="A">Living apart</option>
+                    </select>
+                </div>
+
+                <!-- FAMILY AND EDUCATION -->
+                <h3>Family and Education</h3>
+
+                <div class="form-group">
+                    <label for="Medu">Mother's Education (0–4)</label>
+                    <input type="number"
+                           id="Medu"
+                           name="Medu"
+                           min="0"
+                           max="4"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="Fedu">Father's Education (0–4)</label>
+                    <input type="number"
+                           id="Fedu"
+                           name="Fedu"
+                           min="0"
+                           max="4"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="Mjob">Mother's Job</label>
+                    <select id="Mjob" name="Mjob" required>
+                        <option value="">Select</option>
+                        <option value="teacher">Teacher</option>
+                        <option value="health">Healthcare</option>
+                        <option value="services">Services</option>
+                        <option value="at_home">At home</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="Fjob">Father's Job</label>
+                    <select id="Fjob" name="Fjob" required>
+                        <option value="">Select</option>
+                        <option value="teacher">Teacher</option>
+                        <option value="health">Healthcare</option>
+                        <option value="services">Services</option>
+                        <option value="at_home">At home</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="reason">Reason for Choosing School</label>
+                    <select id="reason" name="reason" required>
+                        <option value="">Select</option>
+                        <option value="home">Close to home</option>
+                        <option value="reputation">School reputation</option>
+                        <option value="course">Course preference</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="guardian">Guardian</label>
+                    <select id="guardian" name="guardian" required>
+                        <option value="">Select</option>
+                        <option value="mother">Mother</option>
+                        <option value="father">Father</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <!-- ACADEMIC PERFORMANCE -->
+                <h3>Academic Performance</h3>
+
+                <div class="form-group">
+                    <label for="traveltime">
+                        Travel Time to School (1–4)
+                    </label>
+                    <input type="number"
+                           id="traveltime"
+                           name="traveltime"
+                           min="1"
+                           max="4"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="studytime">
+                        Weekly Study Time (1–4)
+                    </label>
+                    <input type="number"
+                           id="studytime"
+                           name="studytime"
+                           min="1"
+                           max="4"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="failures">
+                        Previous Class Failures (0–4)
+                    </label>
+                    <input type="number"
+                           id="failures"
+                           name="failures"
+                           min="0"
+                           max="4"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="G1">First Period Grade (0–20)</label>
+                    <input type="number"
+                           id="G1"
+                           name="G1"
+                           min="0"
+                           max="20"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="G2">Second Period Grade (0–20)</label>
+                    <input type="number"
+                           id="G2"
+                           name="G2"
+                           min="0"
+                           max="20"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <select id="subject" name="subject" required>
+                        <option value="">Select subject</option>
+                        <option value="math">Mathematics</option>
+                        <option value="portuguese">Portuguese</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="attendance_proxy_pct">
+                        Attendance Proxy (%)
+                    </label>
+                    <input type="number"
+                           id="attendance_proxy_pct"
+                           name="attendance_proxy_pct"
+                           min="0"
+                           max="100"
+                           step="0.1"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="absences">Number of Absences</label>
+                    <input type="number"
+                           id="absences"
+                           name="absences"
+                           min="0"
+                           max="100"
+                           required>
+                </div>
+
+                <!-- SUPPORT AND LIFESTYLE -->
+                <h3>Support and Lifestyle</h3>
+
+                <div class="form-group">
+                    <label for="schoolsup">
+                        Extra Educational Support
+                    </label>
+                    <select id="schoolsup" name="schoolsup" required>
+                        <option value="">Select</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="famsup">Family Educational Support</label>
+                    <select id="famsup" name="famsup" required>
+                        <option value="">Select</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="paid">Extra Paid Classes</label>
+                    <select id="paid" name="paid" required>
+                        <option value="">Select</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="activities">
+                        Extracurricular Activities
+                    </label>
+                    <select id="activities" name="activities" required>
+                        <option value="">Select</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="nursery">Attended Nursery School</label>
+                    <select id="nursery" name="nursery" required>
+                        <option value="">Select</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="higher">Wants Higher Education</label>
+                    <select id="higher" name="higher" required>
+                        <option value="">Select</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="internet">Internet Access at Home</label>
+                    <select id="internet" name="internet" required>
+                        <option value="">Select</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="romantic">
+                        In a Romantic Relationship
+                    </label>
+                    <select id="romantic" name="romantic" required>
+                        <option value="">Select</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="famrel">
+                        Family Relationship Quality (1–5)
+                    </label>
+                    <input type="number"
+                           id="famrel"
+                           name="famrel"
+                           min="1"
+                           max="5"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="freetime">
+                        Free Time After School (1–5)
+                    </label>
+                    <input type="number"
+                           id="freetime"
+                           name="freetime"
+                           min="1"
+                           max="5"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="goout">
+                        Going Out with Friends (1–5)
+                    </label>
+                    <input type="number"
+                           id="goout"
+                           name="goout"
+                           min="1"
+                           max="5"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="Dalc">
+                        Workday Alcohol Consumption (1–5)
+                    </label>
+                    <input type="number"
+                           id="Dalc"
+                           name="Dalc"
+                           min="1"
+                           max="5"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="Walc">
+                        Weekend Alcohol Consumption (1–5)
+                    </label>
+                    <input type="number"
+                           id="Walc"
+                           name="Walc"
+                           min="1"
+                           max="5"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="health">Current Health (1–5)</label>
+                    <input type="number"
+                           id="health"
+                           name="health"
+                           min="1"
+                           max="5"
+                           required>
+                </div>
+
+                <!-- SUBMIT BUTTON -->
+                <button type="submit" id="predict-button">
+                    Predict Final Grade
+                </button>
+
+            </form>
+
+            <!-- PREDICTION RESULTS -->
+            <div id="result" aria-live="polite">
+
+                {% if linear_prediction is defined
+                      and random_forest_prediction is defined %}
+
+                    <section class="result-card">
+
+                        <h2>Prediction Results</h2>
+
+                        <div class="result-item">
+                            <h3>Linear Regression</h3>
+
+                            <p class="result-value">
+                                {{ linear_prediction }} <span>/ 20</span>
+                            </p>
+                        </div>
+
+                        <div class="result-item">
+                            <h3>Random Forest Regressor</h3>
+
+                            <p class="result-value">
+                                {{ random_forest_prediction }} <span>/ 20</span>
+                            </p>
+                        </div>
+
+                        <p class="result-note">
+                            These values are estimated final grades based
+                            on the information provided.
+                        </p>
+
+                    </section>
+
+                {% endif %}
+
+                {% if error_message %}
+                    <div class="error-message" role="alert">
+                        {{ error_message }}
+                    </div>
+                {% endif %}
+
+            </div>
+
+            <!-- STUDENT IMPROVEMENT RECOMMENDATIONS -->
+            {% if recommendations %}
+            <section class="recommendations-section" id="recommendations">
+
+                <div class="recommendations-header">
+                    <h2>Student Improvement Recommendations</h2>
+
+                    <p>
+                        Personalized suggestions to help improve your
+                        academic performance.
+                    </p>
+                </div>
+
+                <div class="recommendations-grid">
+
+                    {% for recommendation in recommendations %}
+                    <article class="recommendation-card">
+
+                        <div class="recommendation-top">
+                            <h3>{{ recommendation.area }}</h3>
+
+                            <span class="recommendation-status status-{{ recommendation.status|lower|replace(' ', '-') }}">
+                                {{ recommendation.status }}
+                            </span>
+                        </div>
+
+                        <p>{{ recommendation.message }}</p>
+
+                    </article>
+                    {% endfor %}
+
+                </div>
+
+                <p class="recommendations-note">
+                    These suggestions are based on the information you
+                    entered. They provide general guidance and do not
+                    guarantee a particular final grade.
+                </p>
+
+            </section>
+            {% endif %}
+
+        </main>
+
+        <!-- FOOTER -->
+        <footer>
+            <p>
+                Student Performance Prediction |
+                Machine Learning Project
+            </p>
+        </footer>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
