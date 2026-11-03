@@ -17,4 +17,15 @@ document.addEventListener("DOMContentLoaded", () => {
         submitButton.disabled = true;
         submitButton.textContent = "Processing...";
     });
+
+    // After the server responds and the page reloads,
+    // automatically scroll to the prediction result.
+    if (result.children.length > 0) {
+        setTimeout(() => {
+            result.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }, 300);
+    }
 });
