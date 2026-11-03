@@ -1,3 +1,6 @@
+""" & "$env:LOCALAPPDATA\Programs\Python\Python314\python.exe" app.py
+http://127.0.0.1:5000/predict
+"""
 
 from flask import Flask, render_template, request
 import joblib
@@ -10,7 +13,7 @@ app = Flask(__name__)
 def generate_recommendations(data):
     recommendations = []
 
-        # 1. Attendance
+    # 1. Attendance
     attendance = data["attendance_proxy_pct"]
 
     if attendance < 75:
@@ -285,4 +288,4 @@ def predict():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
